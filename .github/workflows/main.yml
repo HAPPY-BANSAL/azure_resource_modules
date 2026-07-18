@@ -35,11 +35,14 @@ jobs:
           terraform_version: "1.14.6"
 
       - name: Terraform Init
+        working-directory: modules
         run: terraform init
 
       - name: Terraform Plan
+        working-directory: modules
         run: terraform plan
 
       - name: Terraform Apply
+        working-directory: modules
         run: terraform apply -auto-approve
 
