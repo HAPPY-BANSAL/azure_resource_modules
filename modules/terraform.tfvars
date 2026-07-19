@@ -38,17 +38,6 @@ subnets= {
     }
 }
 
-network_interfaces= {
-    nic1= {
-        name= "nic-frontend"
-        location = "centralindia"
-        resource_group_name = "rg-terraform"
-        pip_id = "pip1"  
-        subnet_id = "subnet1"
-        private_ip_address_allocation = "Dynamic"
-        }
-    
-    }
 
     pips= {
         pip1={
@@ -68,13 +57,19 @@ vms = {
         size = "Standard_d2s_v3"
         admin_username = "azureuser"
         admin_password = "Password@1234"
-        network_interface_id = "nic1"
+       
         source_image_publisher = "Canonical"
         source_image_offer = "UbuntuServer" 
         source_image_sku = "18.04-LTS"
         source_image_version = "latest"
         os_disk_caching = "ReadWrite"
         os_disk_storage_account_type = "Standard_LRS"
+        name= "nic-frontend"
+        location = "centralindia"
+        resource_group_name = "rg-terraform"
+        pip_id = "pip1"  
+        subnet_id = "subnet1"
+        private_ip_address_allocation = "Dynamic"
     }
 }
 

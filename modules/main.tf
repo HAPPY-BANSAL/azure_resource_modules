@@ -20,14 +20,7 @@ module "subnet" {
   source = "../azurerm_subnet"
   subnets = var.subnets
 }
-module "network_interface" {
-  depends_on = [ module.subnet, module.public_ip ] 
-  source = "../azurerm_network_interface"
-  network_interfaces = var.network_interfaces
-  subnets = var.subnets
-  pips = var.pips
-  
-}
+
 
 module "public_ip" {
   depends_on = [module.resource_group]
@@ -35,10 +28,12 @@ module "public_ip" {
   pips = var.pips
 }
 module "virtual_machine" {
-      depends_on = [ module.network_interface, module.public_ip ]
+      depends_on = [ module.subnet, module.public_ip ]
       source = "../azurerm_virtual_machine"
       vms = var.vms
-      network_interfaces = var.network_interfaces
+      subnets = var.subnets
+      pips =var.pips
+
 }
 module "network_security_group" {
       depends_on = [module.resource_group]

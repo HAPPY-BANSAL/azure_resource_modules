@@ -2,7 +2,7 @@ variable "rgs" {}
 variable "stgs" {}
 variable "vnets" {}
 variable "subnets" {}
-variable "network_interfaces" {}
+
 variable "pips" {}
 variable "vms" {}
 variable "nsgs" {}

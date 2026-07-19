@@ -1,3 +1,17 @@
+resource "azurerm_network_interface" "example-nic" {
+  for_each = var.vms
+  name                = each.value.name
+  location            = each.value.location
+  resource_group_name = each.value.resource_group_name
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = data.azurerm_subnet.example-subnet[each.key].id
+    private_ip_address_allocation = each.value.private_ip_address_allocation
+    public_ip_address_id          = data.azurerm_public_ip.example-pip[each.key].id
+  }
+}
+
 resource "azurerm_linux_virtual_machine" "vm" {
     for_each = var.vms
     name = each.value.name
@@ -6,7 +20,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
     size = each.value.size
     admin_username = each.value.admin_username
     admin_password = each.value.admin_password
-    network_interface_ids = [data.azurerm_network_interface.nic[each.value.network_interface_id].id]
+    network_interface_ids = [azurerm_network_interface.example-nic[each.key].id]
     disable_password_authentication = false
 
     source_image_reference {
